@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application  xmlns:mx="library://ns.adobe.com/flex/mx"
+                xmlns:fx="http://ns.adobe.com/mxml/2009"
+			    xmlns:s="library://ns.adobe.com/flex/spark"
+			    width="250" height="200"
+                creationComplete="init()">
+    
+    <fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+    
+    <fx:Script>
+    <![CDATA[
+        import mx.controls.Alert;
+        
+        public function init() : void {
+        }
+    ]]>
+    </fx:Script>    
+</s:Application>    

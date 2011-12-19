@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<UsuariosList>
+
+	<Usuario>
+            <id>1</id>
+            <name>William Yanez</name>
+	</Usuario>
+
+	<Usuario>
+			<id>2</id>
+            <name>Usuario de Prueba</name>
+	</Usuario>
+</UsuariosList>
