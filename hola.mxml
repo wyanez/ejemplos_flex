@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="413" height="192" minWidth="955" minHeight="600"
+			   pageTitle="Hola Mundo desde Flex!"
+			   creationComplete="init()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			
+			public function init() : void {
+				lblNombre.text = "Nombre:";
+				txtNombre.text = "Tipea tu nombre";
+			}
+			
+			public function saludar() : void{
+				Alert.show("Hola "+ txtNombre.text+" desde Flex!");
+			}		
+		]]>
+	</fx:Script>
+		
+	<s:Label id="lblNombre" x="71" y="74" width="55" text="Label"/>
+	<s:TextInput id="txtNombre" x="128" y="69" width="233"/>
+	<s:Button id="btnSaludar" x="186" y="108" label="Saludar" click="saludar()"/>
+</s:Application>
+
