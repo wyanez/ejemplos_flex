@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application  xmlns:mx="library://ns.adobe.com/flex/mx"
+                xmlns:fx="http://ns.adobe.com/mxml/2009"
+			    xmlns:s="library://ns.adobe.com/flex/spark"
+			    width="250" height="200">
+    <fx:Script>
+    <![CDATA[
+        import mx.controls.Alert;
+        //import mx.events.ListEvent;
+        import mx.collections.ArrayCollection;
+        import spark.events.IndexChangeEvent;
+          
+        [Bindable]private var myData : ArrayCollection;
+     
+        private function loadData() : void
+        {
+            myData = new ArrayCollection();
+             
+            // Addiciona dos elementos al ArrayCollection
+            var oItem : Object;
+             
+            oItem = new Object();
+            oItem.name = 'Opción 1';
+            oItem.id =1;
+            myData.addItem(oItem);
+            
+            oItem = new Object();
+            oItem.name = 'Opción2';
+            oItem.id =2;
+            myData.addItem(oItem);
+             
+            oItem = new Object();
+            oItem.name = 'Opción 3';
+            oItem.id =3;
+            myData.addItem(oItem);
+             
+            // Usamos el arrayCollection como dataProvider en el comboBox
+            myCombo.dataProvider=myData;
+        }
+     
+        private function getElementoSeleccionado ( event: IndexChangeEvent) : void
+        {
+            var msg : String;
+            // Dependiendo de la seleccion asignamos un mensaje
+            switch ( myCombo.selectedItem.id )
+            {
+                case 1:
+                    msg='La opción seleccionada es la 1'
+                    break; 
+                case 2:
+                    msg='La opción seleccionada es la 2'
+                    break; 
+                case 3:
+                    msg='La opción seleccionada es la 3'
+                    break; 
+                    
+            }
+            lblMsg.text = msg
+            
+            //mx.controls.Alert.show(myCombo.selectedItem.id+' >> '+msg, "Mensaje");
+        }
+    ]]>
+    </fx:Script>
+    <s:Panel title="Ejemplo de ComboBox" width="250" height="150">
+    <s:Label id="lbl1" x="10" y="10" width="180" text="Seleccione una opción:"/>
+    <s:ComboBox id="myCombo" width="100" x="10" y="30"
+                             creationComplete="loadData()" 
+                             labelField="name" 
+                             change="getElementoSeleccionado(event)"/>
+                             
+    <s:Label id="lblMsg" x="10" y="80" width="200" text=""/>
+                             
+    </s:Panel>
+</s:Application>
