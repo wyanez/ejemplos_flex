@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application  xmlns:mx="library://ns.adobe.com/flex/mx"
+                xmlns:fx="http://ns.adobe.com/mxml/2009"
+			    xmlns:s="library://ns.adobe.com/flex/spark"
+                width="450" height="300"
+                creationComplete="init()">
+    
+    <fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+    
+    <fx:Script>
+    <![CDATA[
+        import mx.controls.Alert;
+        import com.ematics.utils.*;
+        import mx.events.*;
+        
+        private var XML_PATH:String="http://192.168.1.104/carga/carga.xml";
+
+        private var xmlLoader:XMLLoader;
+        private var xmlData:XML;
+        
+        private var tramites_array:Array=new Array();
+                
+        private function init():void
+        {
+                loadXML();
+        }
+
+        private function loadXML():void
+        {
+            xmlLoader=new XMLLoader();
+            xmlLoader.addEventListener(CustomEvent.ONLOADED,onXMLLoaded);
+            xmlLoader.load(XML_PATH);
+        }
+
+        private function onXMLLoaded(evt:CustomEvent):void
+        {
+            evt.target.removeEventListener(Event.COMPLETE,onXMLLoaded);
+            xmlData=new XML(evt.data);
+
+            var cuantos:int=xmlData.Tramite.length();
+            for(var i:int=0;i<cuantos;i++)
+            {
+                var obj:Object=new Object();
+                obj.id=xmlData.Tramite[i].@id;
+                obj.name=xmlData.Tramite[i].name;
+                
+                var arr_recaudos:Array=new Array();
+                var cuantos_rec:int=xmlData.Tramite[i].recaudo.length();
+                
+                obj.contador=cuantos_rec;
+                
+                for(var j:int=0;j<cuantos_rec;i++)
+                {
+                      var objr:Object=new Object();
+                      objr.id=xmlData.Tramite[i].recaudo[j].@id;
+                      objr.name=xmlData.Tramite[i].recaudo[j].@name;
+                      
+                      arr_recaudos.push(objr);
+                }
+                obj.recaudos= arr_recaudos;
+                tramites_array.push(obj);
+            }
+
+             datagrid.dataProvider=tramites_array;
+
+             datagrid.addEventListener(ListEvent.ITEM_CLICK,onItemClick);
+        }
+
+            private function onItemClick(evt:ListEvent):void
+            {
+                var obj:Object=evt.target.selectedItem;
+                showText(obj);
+            }
+
+            private function showText(obj:Object):void
+            {
+                lblMsg.text="Id :"+obj.id+"  "+"Nombre: "+obj.name+"\nRecaudos: "+obj.contador;
+                //obj.recaudos.length
+            }
+
+    ]]>
+    </fx:Script>   
+    
+        <s:Panel title="Carga de Documentos (Prototipo)" width="430" height="550">
+          <s:Label id="lblMsg" x="15" y="10" width="300" text=""/>
+          <mx:DataGrid id="datagrid" x="15" y="70" width="350" height="200">
+            <mx:columns>    
+                <mx:DataGridColumn
+                headerText="Nombre del Tramite"
+                dataField="name" width="350" /> 
+            </mx:columns>                               
+          </mx:DataGrid>
+          
+          <mx:DataGrid id="datagrid2" x="15" y="290" width="350">
+            <mx:columns>    
+                <mx:DataGridColumn
+                headerText="Nombre del Recaudo"
+                dataField="name" width="350" /> 
+            </mx:columns>                               
+          </mx:DataGrid>
+          
+        </s:Panel>
+ 
+</s:Application>    

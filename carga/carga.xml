@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Tramites>   
+    <Tramite id="1">
+            <name>Actualizacion Catastral</name>
+            <Recaudos>
+                <recaudo id="1" name="RIF"/>
+                <recaudo id="2" name="Solvencia Municipal"/>
+                <recaudo id="3" name="Recibo de pago de tasa administrativa"/>                
+            </Recaudos>    
+    </Tramite>
+    <Tramite id="2">
+            <name>Solvencia Catastral</name>
+            <Recaudos>
+                <recaudo id="1" name="RIF"/>
+                <recaudo id="2" name="Solvencia Municipal"/>
+                <recaudo id="4" name="Recibo de pago de Catastro"/>                
+            </Recaudos>    
+    </Tramite>
+    <Tramite id="3">
+            <name>Solvencia Municipal</name>
+            <Recaudos>
+                <recaudo id="1" name="RIF"/>
+                <recaudo id="5" name="Recibo de pago de Impuestos Municipales"/>                
+            </Recaudos>    
+    </Tramite>
+</Tramites>
