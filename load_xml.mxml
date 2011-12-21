@@ -6,16 +6,35 @@
                 creationComplete="datos.send()">
    <fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-        <mx:HTTPService id="datos" url="http://localhost/william/data.xml" />
+        <mx:HTTPService id="datos" url="http://192.168.1.103/data.xml" />
    
    </fx:Declarations>             
              
     <fx:Script>
     <![CDATA[
         import mx.controls.Alert;
+        import mx.events.ListEvent;
+        
+        private function onItemClick( e:ListEvent ):void {
+                 Alert.show(e.itemRenderer.data.name);
+        }
     ]]>
     </fx:Script>    
-
-   <mx:DataGrid dataProvider="{datos.lastResult.UsuariosList.Usuario}"/>
-  
+    <s:Panel title="Ejemplo de DataGrid y XML" width="430" height="280">
+        <mx:DataGrid dataProvider="{datos.lastResult.UsuariosList.Usuario}" 
+                     width="350" 
+                     itemClick="onItemClick( event );">
+        
+        <mx:columns>                
+                <mx:DataGridColumn
+                    headerText="Id"
+                    dataField="id" width="50"/>
+                
+                <mx:DataGridColumn
+                    headerText="Nombre"
+                    dataField="name" width="300" />
+                
+        </mx:columns>
+        </mx:DataGrid>
+    </s:Panel>
 </s:Application>    
