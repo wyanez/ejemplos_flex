@@ -5,7 +5,7 @@
 		
 			private var urlRequest:URLRequest;
 			private var fileReferenceList:FileReferenceList;
-			private var serverSideScript:String = "http://localhost/william/upload_file.php";
+			private var serverSideScript:String = "http://192.168.1.103/upload_file.php";
 		
 			private function init():void {
 				urlRequest = new URLRequest(serverSideScript);
@@ -30,18 +30,18 @@
 				fileReference.upload(urlRequest);
 				
 				// update the status text
-				statusText.text = "Uploading...";
+				statusText.text = "Cargando...";
 			}
 			
 			private function uploadCompleteHandler(event:Event):void {
-				statusText.text = "File Uploaded: " + event.target.name;
+				statusText.text = "Archivo cargado exitosamente : " + event.target.name;
 			}
 			
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="Upload File From Flex" fontWeight="bold"/>
-	<mx:Label text="Choose a file..." id="statusText"/>
-	<mx:Button click="uploadFile();" label="Upload File"/>
+	<mx:Label text="Subir Archivos desde Flex" fontWeight="bold"/>
+	<mx:Label text="Seleccione un Archivo..." id="statusText"/>
+	<mx:Button click="uploadFile();" label="Subir Archivo"/>
 	
 </mx:Application>
