@@ -1,6 +1,18 @@
 README
--------
+----
 Ejemplos de Flex
+==================
+* hola: Ejemplo Basico de Hola Mundo con un textbox y un boton que muestra un alert.
+* combobox: Ejemplo basico que muestra un combobox y se maneja el evento change. 
+* upload : Ejemplo Basico para hacer upload de archivos a un servidor php.
+* datagrid:
+    ** xml1: Ejemplo que carga un DataGrid a partir de los datos de un archivo XML.
+
+Para correr los ejemplos:
+1) Compilamos el ejemplo. Para ello se debe tener el Flex SDK instalado, para compilar:
+$  mxmlc archivo.mxml
+Esto genera el archivo.swf, el cual es llamado desde el archivo html.
+2) Para correrlo abrimos el archivo html asociado al ejemplo.
 
 wyanez@gmail.com
 
