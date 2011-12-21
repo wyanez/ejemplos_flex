@@ -5,10 +5,18 @@
 	<Usuario>
             <id>1</id>
             <name>William Yanez</name>
+            <email>wyanez@gmail.com</email>
 	</Usuario>
 
 	<Usuario>
 			<id>2</id>
+            <name>Usuario de Ematics</name>
+            <email>ematics@gmail.com</email>
+	</Usuario>
+    
+    <Usuario>
+			<id>3</id>
             <name>Usuario de Prueba</name>
+            <email>prueba@gmail.com</email>
 	</Usuario>
 </UsuariosList>
