@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<UsuariosList>
+
+	<Usuario id="1">
+            <name>William Yanez</name>
+            <email>wyanez@gmail.com</email>
+	</Usuario>
+
+	<Usuario id="2">
+            <name>Usuario de Ematics</name>
+            <email>ematics@gmail.com</email>
+	</Usuario>
+    
+    <Usuario id="3">
+            <name>Usuario de Prueba</name>
+            <email>prueba@gmail.com</email>
+	</Usuario>
+</UsuariosList>
