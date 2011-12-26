@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Tramites>   
-    <Tramite id="1">
+    <Tramite id="1" codigo="Codigo Catastral" >
             <name>Actualizacion Catastral</name>
             <Recaudos>
                 <recaudo id="1" name="RIF"/>
@@ -9,7 +9,7 @@
                 <recaudo id="3" name="Recibo de pago de tasa administrativa"/>                
             </Recaudos>    
     </Tramite>
-    <Tramite id="2">
+    <Tramite id="2"  codigo="Cedula o RIF">
             <name>Solvencia Catastral</name>
             <Recaudos>
                 <recaudo id="1" name="RIF"/>
@@ -17,7 +17,7 @@
                 <recaudo id="4" name="Recibo de pago de Catastro"/>                
             </Recaudos>    
     </Tramite>
-    <Tramite id="3">
+    <Tramite id="3"  codigo="Licencia de Funcionamiento">
             <name>Solvencia Municipal</name>
             <Recaudos>
                 <recaudo id="1" name="RIF"/>

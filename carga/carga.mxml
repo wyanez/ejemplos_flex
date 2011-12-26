@@ -2,7 +2,7 @@
 <s:Application  xmlns:mx="library://ns.adobe.com/flex/mx"
                 xmlns:fx="http://ns.adobe.com/mxml/2009"
 			    xmlns:s="library://ns.adobe.com/flex/spark"
-                width="450" height="300"
+                width="800" height="600"
                 creationComplete="init()">
     
     <fx:Declarations>
@@ -15,7 +15,7 @@
         import com.ematics.utils.*;
         import mx.events.*;
         
-        private var XML_PATH:String="http://192.168.1.104/carga/carga.xml";
+        private var XML_PATH:String="http://192.168.1.112/carga/carga.xml";
 
         private var xmlLoader:XMLLoader;
         private var xmlData:XML;
@@ -45,20 +45,23 @@
                 var obj:Object=new Object();
                 obj.id=xmlData.Tramite[i].@id;
                 obj.name=xmlData.Tramite[i].name;
+                obj.codigo=xmlData.Tramite[i].@codigo
                 
                 var arr_recaudos:Array=new Array();
-                var cuantos_rec:int=xmlData.Tramite[i].recaudo.length();
-                
+                var cuantos_rec:int=xmlData.Tramite[i].child("Recaudos").children().length();
+                                
                 obj.contador=cuantos_rec;
                 
-                for(var j:int=0;j<cuantos_rec;i++)
+                for(var j:int=0;j<cuantos_rec;j++)
                 {
                       var objr:Object=new Object();
-                      objr.id=xmlData.Tramite[i].recaudo[j].@id;
-                      objr.name=xmlData.Tramite[i].recaudo[j].@name;
+                      
+                      objr.id=xmlData.Tramite[i].child("Recaudos").children()[j].@id;
+                      objr.name=xmlData.Tramite[i].child("Recaudos").children()[j].@name;
                       
                       arr_recaudos.push(objr);
                 }
+                
                 obj.recaudos= arr_recaudos;
                 tramites_array.push(obj);
             }
@@ -72,12 +75,14 @@
             {
                 var obj:Object=evt.target.selectedItem;
                 showText(obj);
+                datagrid2.dataProvider=obj.recaudos;
+                
             }
 
             private function showText(obj:Object):void
             {
                 lblMsg.text="Id :"+obj.id+"  "+"Nombre: "+obj.name+"\nRecaudos: "+obj.contador;
-                //obj.recaudos.length
+                lblCodigo.text=obj.codigo;
             }
 
     ]]>
@@ -93,7 +98,9 @@
             </mx:columns>                               
           </mx:DataGrid>
           
-          <mx:DataGrid id="datagrid2" x="15" y="290" width="350">
+          <s:Label id="lblCodigo" x="15" y="290" width="200" text="****"/>
+          
+          <mx:DataGrid id="datagrid2" x="15" y="320" width="350">
             <mx:columns>    
                 <mx:DataGridColumn
                 headerText="Nombre del Recaudo"
