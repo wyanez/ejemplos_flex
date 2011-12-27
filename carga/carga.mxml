@@ -14,17 +14,32 @@
         import mx.controls.Alert;
         import com.ematics.utils.*;
         import mx.events.*;
+        import mx.collections.ArrayCollection;
         
-        private var XML_PATH:String="http://192.168.1.112/carga/carga.xml";
+        //private var XML_PATH:String="http://192.168.1.99/carga/carga.xml";
+        private var XML_PATH:String="http://localhost/william/flex/carga/carga.xml";
 
         private var xmlLoader:XMLLoader;
         private var xmlData:XML;
         
-        private var tramites_array:Array=new Array();
-                
+        [Bindable]
+        private var tramites_array:ArrayCollection;
+        
+        private var firstTime:Boolean = true;
+        
+    	private var urlRequest:URLRequest;
+        private var fileReferenceList:FileReferenceList;
+		private var serverUpload:String = "http://localhost/william/flex/upload_file.php";
+		                 
         private function init():void
         {
+                tramites_array=new ArrayCollection();
                 loadXML();
+                
+                urlRequest = new URLRequest(serverUpload);
+				
+                fileReferenceList = new FileReferenceList();
+				//fileReferenceList.addEventListener(Event.SELECT, fileSelectedHandler);
         }
 
         private function loadXML():void
@@ -58,39 +73,86 @@
                       
                       objr.id=xmlData.Tramite[i].child("Recaudos").children()[j].@id;
                       objr.name=xmlData.Tramite[i].child("Recaudos").children()[j].@name;
+                      objr.archivo="";
                       
                       arr_recaudos.push(objr);
                 }
                 
                 obj.recaudos= arr_recaudos;
-                tramites_array.push(obj);
+                tramites_array.addItem(obj);
             }
 
-             datagrid.dataProvider=tramites_array;
+             //datagrid.dataProvider=tramites_array;
 
              datagrid.addEventListener(ListEvent.ITEM_CLICK,onItemClick);
         }
 
-            private function onItemClick(evt:ListEvent):void
-            {
-                var obj:Object=evt.target.selectedItem;
-                showText(obj);
-                datagrid2.dataProvider=obj.recaudos;
-                
-            }
+        private function onItemClick(evt:ListEvent):void
+        {
+            var obj:Object=evt.target.selectedItem;
+            //showText(obj);
+            lblCodigo.text=obj.codigo;
+            datagrid2.dataProvider=obj.recaudos;
+            
+        }
 
-            private function showText(obj:Object):void
+        private function showText(obj:Object):void
+        {
+            //lblMsg.text="Id :"+obj.id+"  "+"Nombre: "+obj.name+"\nRecaudos: "+obj.contador;            
+        }
+        
+        
+        //Funciones para Filtrado
+        
+        private function filter():void {
+           tramites_array.filterFunction = filterTramites;
+           tramites_array.refresh();
+        }
+        
+        private function filterTramites(item:Object):Boolean {
+            var searchString:String = txtFiltro.text.toLowerCase();
+            
+            //var itemName:String = (item.name as String).toLowerCase();
+            var itemName:String = item.name.toLowerCase();
+            
+            return itemName.indexOf(searchString) > -1;
+        }
+        
+        private function clearTxtFiltro():void {
+            if (firstTime == true )
             {
-                lblMsg.text="Id :"+obj.id+"  "+"Nombre: "+obj.name+"\nRecaudos: "+obj.contador;
-                lblCodigo.text=obj.codigo;
+                txtFiltro.text = "";
+                firstTime = false;
             }
+        }
+        
+        
+        public function dumpObj(obj:Object):void {
+          var aux:String;
+          aux="";
+          for (var p:String in obj) {
+           aux += p + ":" + obj[p] + "\n";
+          }          
+        }   
+        
+        public function subir_archivo(i:int):void{
+            Alert.show("id: "+ i);
+            fileReferenceList.browse();
+        } 
 
     ]]>
     </fx:Script>   
     
-        <s:Panel title="Carga de Documentos (Prototipo)" width="430" height="550">
-          <s:Label id="lblMsg" x="15" y="10" width="300" text=""/>
-          <mx:DataGrid id="datagrid" x="15" y="70" width="350" height="200">
+        <s:Panel title="Carga de Documentos (Prototipo)" width="430" height="600">
+          <!--s:Label id="lblMsg" x="15" y="10" width="300" text=""/-->
+          
+          <s:TextInput id="txtFiltro" change="filter()" 
+                     enabled="true" 
+                     focusIn="clearTxtFiltro()" 
+                     text="Filtro/Busqueda..."
+                     width="350" height="25" x="15" y="10"/>
+          
+          <mx:DataGrid id="datagrid" x="15" y="40" width="350" height="200" dataProvider="{tramites_array}">
             <mx:columns>    
                 <mx:DataGridColumn
                 headerText="Nombre del Tramite"
@@ -98,13 +160,26 @@
             </mx:columns>                               
           </mx:DataGrid>
           
-          <s:Label id="lblCodigo" x="15" y="290" width="200" text="****"/>
-          
-          <mx:DataGrid id="datagrid2" x="15" y="320" width="350">
+          <s:Label id="lblCodigo" x="15" y="260" width="115" text="Seleccione el tramite"/>
+          <s:TextInput id="txtCodigo" width="220" height="25" x="130" y="250"/>
+                     
+          <mx:DataGrid id="datagrid2" x="15" y="290" width="350">
             <mx:columns>    
                 <mx:DataGridColumn
                 headerText="Nombre del Recaudo"
-                dataField="name" width="350" /> 
+                dataField="name" width="270" />
+                 
+                <mx:DataGridColumn
+                headerText="Documento"
+                dataField="archivo" width="80">
+                    <mx:itemRenderer>
+                     <fx:Component>
+                        <mx:Button label="Adjuntar..."
+                        width="75"
+                        click="outerDocument.subir_archivo(data.id)"/>
+                      </fx:Component> 
+                    </mx:itemRenderer> 
+                 </mx:DataGridColumn>               
             </mx:columns>                               
           </mx:DataGrid>
           
