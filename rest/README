@@ -1,0 +1,11 @@
+Ejemplo de Cliente REST en Flex usando la libreria as3core√lib
+=============================================================
++ Para Compilar:
+mxmlc cliente_rest.mxml -library-path+=as3corelib.swc
+
++ Para obtener la libreria de as3corelib:
+git clone git://github.com/mikechambers/as3corelib.git
+cd as3corelib/build
+ant
+y queda la libreria compilada (as3corelib.swc) en bin
+

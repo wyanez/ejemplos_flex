@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application  xmlns:mx="library://ns.adobe.com/flex/mx"
+                xmlns:fx="http://ns.adobe.com/mxml/2009"
+			    xmlns:s="library://ns.adobe.com/flex/spark"
+			    width="250" height="200"
+                creationComplete="init()">
+    
+    <fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+        <s:HTTPService id="servicio_rest" url="http://localhost:4567/hola/William" 
+                                          result="handleServicioResult(event)" 
+                                          fault="handleServicioFault(event)" />
+	</fx:Declarations>
+    
+    <fx:Script>
+    <![CDATA[
+        import mx.controls.Alert;
+        import com.adobe.serialization.json.JSON;
+        import mx.rpc.events.FaultEvent;
+        import mx.rpc.events.ResultEvent
+        
+        public function init() : void {
+            servicio_rest.send();
+        }
+        
+        protected function handleServicioResult(event:ResultEvent):void
+		{
+                var rawData:String = String(event.result);
+                lblMsg.text=rawData;
+                
+                var arr:Array = (com.adobe.serialization.json.JSON.decode(rawData) as Array);
+                lblMsg.text="En Español: "+arr[0]+"\nEn Ingles:"+arr[1];
+        }
+
+		protected function handleServicioFault(event:FaultEvent):void
+		{
+				trace(event.message);
+                Alert.show("handleServicioFault()");
+		}
+        
+    ]]>
+    </fx:Script>    
+    
+    <s:Label id="lblMsg" x="10" y="10" width="200" text=""/>
+    
+</s:Application>    
