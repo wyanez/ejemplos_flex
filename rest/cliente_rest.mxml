@@ -25,17 +25,15 @@
         
         protected function handleServicioResult(event:ResultEvent):void
 		{
-                var rawData:String = String(event.result);
-                lblMsg.text=rawData;
-                
-                var arr:Array = (com.adobe.serialization.json.JSON.decode(rawData) as Array);
-                lblMsg.text="En Español: "+arr[0]+"\nEn Ingles:"+arr[1];
+            var rawData:String = String(event.result);
+            var obj:Object = com.adobe.serialization.json.JSON.decode(rawData);
+            lblMsg.text="En Español: "+obj['spanish']+"\nEn Ingles: "+obj['english'];
         }
 
 		protected function handleServicioFault(event:FaultEvent):void
 		{
-				trace(event.message);
-                Alert.show("handleServicioFault()");
+            trace(event.message);
+            Alert.show("handleServicioFault()");
 		}
         
     ]]>
